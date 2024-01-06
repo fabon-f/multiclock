@@ -8,8 +8,9 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
+    'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', '.prettierrc.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -26,7 +27,7 @@ module.exports = {
   },
   settings: {
     react: {
-      "version": "detect"
-    }
-  }
+      version: 'detect',
+    },
+  },
 }
