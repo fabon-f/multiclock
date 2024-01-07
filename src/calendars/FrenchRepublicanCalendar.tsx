@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 interface Props {
   date: Date
 }
@@ -23,11 +25,39 @@ function convertTime(date: Date) {
   }
 }
 
+function convertTimezone(date: Date, isParis: boolean): Date {
+  if (isParis) {
+    // until 1911 Paris Mean Time is 560.935 seconds ahead of Greenwich Mean Time
+    return new Date(
+      date.getTime() + date.getTimezoneOffset() * 60 * 1000 + 560935,
+    )
+  }
+  return date
+}
+
+function convert(date: Date, isParis: boolean) {
+  const localDate = convertTimezone(date, isParis)
+  return convertTime(localDate)
+}
+
 export default function FrenchRepublicanCalendar({ date }: Props) {
-  const result = convertTime(date)
+  const [isParis, setIsParis] = useState(false)
+  const result = convert(date, isParis)
   return (
     <div>
-      {result.hour} {result.minute} {result.second}
+      <div>
+        {result.hour} {result.minute} {result.second}
+      </div>
+      <label>
+        <input
+          type="checkbox"
+          checked={isParis}
+          onChange={(e) => {
+            setIsParis(e.target.checked)
+          }}
+        />
+        パリ時間 (1911年以前)
+      </label>
     </div>
   )
 }
