@@ -14,6 +14,8 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@kuma-ui/core": "^1.5.5",
+    "@kuma-ui/vite": "^1.2.1",
     "@tsconfig/strictest": "^2.0.2",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",

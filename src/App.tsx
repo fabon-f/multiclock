@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { VStack } from '@kuma-ui/core'
 import FrenchRepublicanCalendar from './calendars/FrenchRepublicanCalendar'
 
 function App() {
@@ -12,9 +13,9 @@ function App() {
     }
   }, [])
   return (
-    <div>
+    <VStack m="auto" maxWidth="800px" gap={24}>
       <FrenchRepublicanCalendar date={currentDate} />
-    </div>
+    </VStack>
   )
 }
 

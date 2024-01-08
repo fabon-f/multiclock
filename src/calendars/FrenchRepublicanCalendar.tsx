@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Text, VStack } from '@kuma-ui/core'
 
 interface Props {
   date: Date
@@ -44,20 +45,22 @@ export default function FrenchRepublicanCalendar({ date }: Props) {
   const [isParis, setIsParis] = useState(false)
   const result = convert(date, isParis)
   return (
-    <div>
-      <div>
+    <VStack gap={16}>
+      <Text as="div" fontSize={24} fontWeight="bold">
         {result.hour} {result.minute} {result.second}
+      </Text>
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            checked={isParis}
+            onChange={(e) => {
+              setIsParis(e.target.checked)
+            }}
+          />
+          パリ時間 (1911年以前)
+        </label>
       </div>
-      <label>
-        <input
-          type="checkbox"
-          checked={isParis}
-          onChange={(e) => {
-            setIsParis(e.target.checked)
-          }}
-        />
-        パリ時間 (1911年以前)
-      </label>
-    </div>
+    </VStack>
   )
 }
