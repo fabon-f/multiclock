@@ -7,7 +7,7 @@ interface Props {
 
 function convert(date: Date) {
   const year = date.getFullYear() - 1911
-  return `주체${year}. ${date.getMonth() + 1}. ${date.getDate()}. ${padNum(
+  return `주체${year}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${padNum(
     date.getHours(),
     2,
   )}:${padNum(date.getMinutes(), 2)}:${padNum(date.getSeconds(), 2)}`

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Text, VStack } from '@kuma-ui/core'
+import { padNum } from '../utils'
 
 interface Props {
   date: Date
@@ -47,7 +48,7 @@ export default function FrenchRepublicanCalendar({ date }: Props) {
   return (
     <VStack gap={16}>
       <Text as="div" fontSize={24} fontWeight="bold">
-        {result.hour} {result.minute} {result.second}
+        {result.hour} {padNum(result.minute, 2)} {padNum(result.second, 2)}
       </Text>
       <div>
         <label>
