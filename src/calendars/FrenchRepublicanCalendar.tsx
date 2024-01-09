@@ -69,7 +69,7 @@ function convertDate(date: Temporal.PlainDate) {
     'La Fête des Récompenses',
     'La Fête de la Révolution',
   ][days - 360]
-  if (dayName) {
+  if (!dayName) {
     throw new Error('Assertion')
   }
   return `${dayName}, an ${year}`
