@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { VStack } from '@kuma-ui/core'
 import { Temporal } from 'temporal-polyfill'
-import FrenchRepublicanCalendar from './calendars/FrenchRepublicanCalendar'
+import FrenchRepublicanCalendar from './calendars/frenchRepublicanCalendar/FrenchRepublicanCalendar'
 import JucheCalendar from './calendars/JucheCalendar'
 import RocCalendar from './calendars/RocCalendar'
 

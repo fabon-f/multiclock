@@ -1,13 +1,7 @@
-import { useState } from 'react'
 import { Temporal } from 'temporal-polyfill'
-import { Text, VStack } from '@kuma-ui/core'
-import { autumnalEquinox, padNum, toRoman } from '../utils'
+import { autumnalEquinox, padNum, toRoman } from '../../utils'
 
-interface Props {
-  date: Temporal.ZonedDateTime
-}
-
-function convertTime(time: Temporal.PlainTime) {
+export function convertTime(time: Temporal.PlainTime) {
   const elapsedSeconds =
     time.hour * 3600 + time.minute * 60 + time.second + time.millisecond / 1000
   const elapsedDecimalSeconds = (elapsedSeconds / 86400) * 100000
@@ -39,7 +33,7 @@ function lastAutumnalEquinoxInParis(date: Temporal.PlainDate) {
   }
 }
 
-function convertDate(date: Temporal.PlainDate) {
+export function convertDate(date: Temporal.PlainDate) {
   const equinoxDate = lastAutumnalEquinoxInParis(date)
   const year = toRoman(equinoxDate.year - 1791)
   const days = equinoxDate.until(date).days
@@ -101,7 +95,7 @@ function toDateTime(
   return date.toPlainDateTime()
 }
 
-function convert(date: Temporal.ZonedDateTime, isParis: boolean) {
+export function convert(date: Temporal.ZonedDateTime, isParis: boolean) {
   const dateTime = toDateTime(date, isParis)
   const republicanTime = convertTime(dateTime.toPlainTime())
   const republicanDate = convertDate(dateTime.toPlainDate())
@@ -109,27 +103,4 @@ function convert(date: Temporal.ZonedDateTime, isParis: boolean) {
     republicanTime.minute,
     2,
   )} ${padNum(republicanTime.second, 2)}`
-}
-
-export default function FrenchRepublicanCalendar({ date }: Props) {
-  const [isParis, setIsParis] = useState(false)
-  return (
-    <VStack gap={16}>
-      <Text as="div" fontSize={24} fontWeight="bold">
-        {convert(date, isParis)}
-      </Text>
-      <div>
-        <label>
-          <input
-            type="checkbox"
-            checked={isParis}
-            onChange={(e) => {
-              setIsParis(e.target.checked)
-            }}
-          />
-          パリ時間 (1911年以前)
-        </label>
-      </div>
-    </VStack>
-  )
 }
