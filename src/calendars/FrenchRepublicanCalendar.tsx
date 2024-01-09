@@ -1,17 +1,15 @@
 import { useState } from 'react'
+import { Temporal } from 'temporal-polyfill'
 import { Text, VStack } from '@kuma-ui/core'
 import { padNum } from '../utils'
 
 interface Props {
-  date: Date
+  date: Temporal.ZonedDateTime
 }
 
-function convertTime(date: Date) {
+function convertTime(time: Temporal.PlainTime) {
   const elapsedSeconds =
-    date.getHours() * 3600 +
-    date.getMinutes() * 60 +
-    date.getSeconds() +
-    date.getMilliseconds() / 1000
+    time.hour * 3600 + time.minute * 60 + time.second + time.millisecond / 1000
   const elapsedDecimalSeconds = (elapsedSeconds / 86400) * 100000
   const decimalHour = Math.floor(elapsedDecimalSeconds / 10000)
   const decimalMinute = Math.floor(
@@ -27,28 +25,32 @@ function convertTime(date: Date) {
   }
 }
 
-function convertTimezone(date: Date, isParis: boolean): Date {
+function toDateTime(date: Temporal.ZonedDateTime, isParis: boolean) {
   if (isParis) {
     // until 1911 Paris Mean Time is 560.935 seconds ahead of Greenwich Mean Time
-    return new Date(
-      date.getTime() + date.getTimezoneOffset() * 60 * 1000 + 560935,
-    )
+    return date
+      .withTimeZone('UTC')
+      .add(Temporal.Duration.from({ seconds: 560, milliseconds: 935 }))
+      .toPlainDateTime()
   }
-  return date
+  return date.toPlainDateTime()
 }
 
-function convert(date: Date, isParis: boolean) {
-  const localDate = convertTimezone(date, isParis)
-  return convertTime(localDate)
+function convert(date: Temporal.ZonedDateTime, isParis: boolean) {
+  const dateTime = toDateTime(date, isParis)
+  const republicanTime = convertTime(dateTime.toPlainTime())
+  return `${republicanTime.hour} ${padNum(republicanTime.minute, 2)} ${padNum(
+    republicanTime.second,
+    2,
+  )}`
 }
 
 export default function FrenchRepublicanCalendar({ date }: Props) {
   const [isParis, setIsParis] = useState(false)
-  const result = convert(date, isParis)
   return (
     <VStack gap={16}>
       <Text as="div" fontSize={24} fontWeight="bold">
-        {result.hour} {padNum(result.minute, 2)} {padNum(result.second, 2)}
+        {convert(date, isParis)}
       </Text>
       <div>
         <label>

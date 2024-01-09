@@ -1,18 +1,17 @@
 import { Text } from '@kuma-ui/core'
 import { padNum } from '../utils'
+import { Temporal } from 'temporal-polyfill'
 
 interface Props {
-  date: Date
+  date: Temporal.ZonedDateTime
 }
 
-function convert(date: Date) {
-  const year = date.getFullYear() - 1911
-  return `民國${year}年${
-    date.getMonth() + 1
-  }月${date.getDate()}日 ${date.getHours()}:${padNum(
-    date.getMinutes(),
+function convert(date: Temporal.ZonedDateTime) {
+  const year = date.year - 1911
+  return `民國${year}年${date.month}月${date.day}日 ${date.hour}:${padNum(
+    date.minute,
     2,
-  )}:${padNum(date.getSeconds(), 2)}`
+  )}:${padNum(date.second, 2)}`
 }
 
 export default function RocCalendar({ date }: Props) {

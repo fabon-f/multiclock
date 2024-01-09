@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "temporal-polyfill": "^0.2.0"
   },
   "devDependencies": {
     "@kuma-ui/core": "^1.5.5",

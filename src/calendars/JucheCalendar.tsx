@@ -1,16 +1,17 @@
 import { Text } from '@kuma-ui/core'
 import { padNum } from '../utils'
+import { Temporal } from 'temporal-polyfill'
 
 interface Props {
-  date: Date
+  date: Temporal.ZonedDateTime
 }
 
-function convert(date: Date) {
-  const year = date.getFullYear() - 1911
-  return `주체${year}년 ${date.getMonth() + 1}월 ${date.getDate()}일 ${padNum(
-    date.getHours(),
+function convert(date: Temporal.ZonedDateTime) {
+  const year = date.year - 1911
+  return `주체${year}년 ${date.month}월 ${date.day}일 ${padNum(
+    date.hour,
     2,
-  )}:${padNum(date.getMinutes(), 2)}:${padNum(date.getSeconds(), 2)}`
+  )}:${padNum(date.minute, 2)}:${padNum(date.second, 2)}`
 }
 
 export default function JucheCalendar({ date }: Props) {
